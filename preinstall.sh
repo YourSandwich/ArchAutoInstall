@@ -59,20 +59,20 @@ echo -e "\nCreating Filesystems...\n$HR"
 mkfs.vfat -F32 -n "EFI" "${DISK}1"  # Formats EFI Partition
 mkfs.btrfs -L "ROOT" "${DISK}2"     # Formats ROOT Partition
 mkfs.btrfs -L "HOME" "${DISK}3"     # Formats HOME Partition
-mkswap ${DISK}4                     # Create SWAP
+mkswap "${DISK}4"                     # Create SWAP
+
 # mount target
 mkdir /mnt
 mount "${DISK}2" /mnt
-btrfs su cr /mnt/@
+btrfs su cr /mnt/@          # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
-mount "${DISK}3" /mnt
-btrfs su cr /mnt/@home
+mount "${DISK}3" /mnt       
+btrfs su cr /mnt/@home      # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
-mount -o subvol=@ "${DISK}2" /mnt
-mount -o subvol=@home "${DISK}3" /mnt/home
+mount -o subvol=@ "${DISK}2" /mnt        # Mount Subolume from root   
+mount -o subvol=@home "${DISK}3" /mnt/   # Mount Subolume from home 
 mkdir /mnt/boot
-mount "${DISK}1" /mnt/boot
-
+mount "${DISK}1" /mnt/boot               # Mounts UEFI Partition
 echo "--------------------------------------"
 echo "-- Arch Install on Main Drive       --"
 echo "--------------------------------------"
