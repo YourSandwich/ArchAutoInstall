@@ -78,7 +78,7 @@ echo "--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware grub nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
-
+"""
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
 echo "--------------------------------------"
