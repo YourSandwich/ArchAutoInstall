@@ -147,7 +147,9 @@ function softwareSetup {
 
         # SYSTEM --------------------------------------------------------------
 
-        'linux-lts'             # Long term support kernel
+        'linux'                 # Long term support kernel
+        'linux-headers'         # Kernel headers
+        'dkms'                  # Kernel modules
 
         # TERMINAL UTILITIES --------------------------------------------------
 
@@ -317,21 +319,12 @@ fi' > ${HOME}/.xinitrc
 
     # ------------------------------------------------------------------------
 
-    echo
-    echo "Configuring LTS Kernel as a secondary boot option"
-
-    sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-lts.conf
-    sudo sed -i 's|Arch Linux|Arch Linux LTS Kernel|g' /boot/loader/entries/arch-lts.conf
-    sudo sed -i 's|vmlinuz-linux|vmlinuz-linux-lts|g' /boot/loader/entries/arch-lts.conf
-    sudo sed -i 's|initramfs-linux.img|initramfs-linux-lts.img|g' /boot/loader/entries/arch-lts.conf
-
-    # ------------------------------------------------------------------------
 
     echo
     echo "Configuring vconsole.conf to set a larger font for login shell"
 
     printf 'KEYMAP=us
-FONT=ter-v32b' < /etc/vconsole.conf
+    FONT=ter-v32b' < /etc/vconsole.conf
 
     # ------------------------------------------------------------------------
 

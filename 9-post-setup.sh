@@ -51,15 +51,6 @@ sudo sed -i 's|xserverauthfile=\$HOME/.serverauth.\$\$|xserverauthfile=\$XAUTHOR
 
 # ------------------------------------------------------------------------
 
-echo -e "\nConfiguring LTS Kernel as a secondary boot option"
-
-sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-lts.conf
-sudo sed -i 's|Arch Linux|Arch Linux LTS Kernel|g' /boot/loader/entries/arch-lts.conf
-sudo sed -i 's|vmlinuz-linux|vmlinuz-linux-lts|g' /boot/loader/entries/arch-lts.conf
-sudo sed -i 's|initramfs-linux.img|initramfs-linux-lts.img|g' /boot/loader/entries/arch-lts.conf
-
-# ------------------------------------------------------------------------
-
 echo -e "\nConfiguring vconsole.conf to set a larger font for login shell"
 
 sudo cat <<EOF > /etc/vconsole.conf

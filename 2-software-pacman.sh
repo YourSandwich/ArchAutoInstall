@@ -13,7 +13,9 @@ PKGS=(
 
     # SYSTEM --------------------------------------------------------------
 
-    'linux-lts'             # Long term support kernel
+    'linux'                 # Long term support kernel
+    'linux-headers'         # Kernel headers
+    'dkms'                  # Kernel modules
 
     # TERMINAL UTILITIES --------------------------------------------------
 

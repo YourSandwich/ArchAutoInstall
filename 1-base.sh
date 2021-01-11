@@ -12,7 +12,6 @@ echo -e "\nInstalling Base System\n"
 PKGS=(
 
     # --- XORG Display Rendering
-        'xorg'                  # Base Package
         'xorg-drivers'          # Display Drivers 
         'xterm'                 # Terminal for TTY
         'xorg-server'           # XOrg server
