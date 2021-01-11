@@ -1,4 +1,4 @@
-# Titus ArchMatic Installer Script
+# Fork of Titus ArchMatic Installer Script - preinstall csutomized for btrfs and german keyboard
 
 <img src="https://i.imgur.com/Yn29sze.png" />
 
