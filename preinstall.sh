@@ -112,7 +112,10 @@ echo "--------------------------------------"
 pacman -S networkmanager dhclient --noconfirm --needed
 systemctl enable --now NetworkManager
 
-echo "Set password for Root"
+echo "Default root password is root"
+passwd
+root
+root
 echo "Add User"
 echo "Eddit sudoers with (EDITOR=nano visudo)"
 echo "Add User to groups (wheel,video,audio,optical,storage,tty)
