@@ -13,7 +13,8 @@ echo "-------------------------------------------------"
 timedatectl set-ntp true
 pacman -Sy --noconfirm
 pacman -S --noconfirm pacman-contrib
-
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+curl -s "https://archlinux.org/mirrorlist/?country=AT&protocol=http&protocol=https&ip_version=4" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 > /etc/pacman.d/mirrorlist
 
 
 echo -e "\nInstalling prereqs...\n$HR"
