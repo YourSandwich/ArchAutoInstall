@@ -1,4 +1,3 @@
-'''
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
 #      _          _    __  __      _   _
@@ -58,7 +57,7 @@ echo -e "\nCreating Filesystems...\n$HR"
 mkfs.vfat -F32 -n "EFI" "${DISK}1"  # Formats EFI Partition
 mkfs.btrfs -L "ROOT" "${DISK}2"     # Formats ROOT Partition
 mkfs.btrfs -L "HOME" "${DISK}3"     # Formats HOME Partition
-mkswap "${DISK}4"                     # Create SWAP
+mkswap "${DISK}4"                    # Create SWAP
 
 # mount target
 mkdir /mnt
@@ -69,7 +68,6 @@ mount "${DISK}3" /mnt
 btrfs su cr /mnt/@home      # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
 mount -o subvol=@ "${DISK}2" /mnt        # Mount Subolume from root   
-mount -o subvol=@home "${DISK}3" /mnt/   # Mount Subolume from home 
 mkdir /mnt/boot
 mount "${DISK}1" /mnt/boot               # Mounts UEFI Partition
 
@@ -78,7 +76,7 @@ echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
-'''
+
 cat << EOT | arch-chroot /mnt
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
@@ -98,11 +96,4 @@ echo "--      Set Password for Root       --"
 echo "--------------------------------------"
 echo "Enter password for root user: "
 passwd root
-
-exit
-umount -R /mnt
-
-echo "--------------------------------------"
-echo "--   SYSTEM READY FOR FIRST BOOT    --"
-echo "--------------------------------------"
 EOT
