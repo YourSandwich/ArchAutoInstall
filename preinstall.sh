@@ -116,4 +116,7 @@ echo "Set password for Root"
 echo "Add User"
 echo "Eddit sudoers with (EDITOR=nano visudo)"
 echo "Add User to groups (wheel,video,audio,optical,storage,tty)
+echo "--------------------------------------"
+echo "--          Script ends here!       --"
+echo "--------------------------------------"
 EOT
