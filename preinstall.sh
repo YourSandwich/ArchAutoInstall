@@ -8,14 +8,11 @@
 #-------------------------------------------------------------------------
 
 echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download - AT Only"
+echo "Starting Script                                  "
 echo "-------------------------------------------------"
 timedatectl set-ntp true
 pacman -Sy --noconfirm
 pacman -S --noconfirm pacman-contrib
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-curl -s "https://archlinux.org/mirrorlist/?country=AT&protocol=http&protocol=https&ip_version=4" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 >> /etc/pacman.d/mirrorlist
-
 
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
@@ -58,7 +55,8 @@ echo -e "\nCreating Filesystems...\n$HR"
 mkfs.vfat -F32 -n "EFI" "${DISK}1"  # Formats EFI Partition
 mkfs.btrfs -L "ROOT" "${DISK}2"     # Formats ROOT Partition
 mkfs.btrfs -L "HOME" "${DISK}3"     # Formats HOME Partition
-mkswap "${DISK}4"                    # Create SWAP
+mkswap "${DISK}4"                   # Create SWAP
+swapon "${DISK}4"                   #Set SWAP
 
 # mount target
 mkdir /mnt
@@ -79,6 +77,28 @@ pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --n
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat << EOT | arch-chroot /mnt
+
+echo "--------------------------------------"
+echo "-- Setting up localtime             --"
+echo "--------------------------------------"
+
+ln -sf /usr/share/zoneinfo/Europe/Vienna /etc/localtime
+hwclock --systohc
+sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
+sed -i "s/#de_AT.UTF-8/de_AT.UTF-8/g" /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
+echo "ReRe" >> /etc/hostname.conf
+
+# Setting hosts file
+echo "
+127.0.0.1	localhost
+::1		    localhost
+127.0.1.1	ReRe.localdomain	ReRe" >> /etc/hosts
+
+
+mkinitcpio -P
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
 echo "--------------------------------------"
@@ -92,9 +112,8 @@ echo "--------------------------------------"
 pacman -S networkmanager dhclient --noconfirm --needed
 systemctl enable --now NetworkManager
 
-echo "--------------------------------------"
-echo "--      Set Password for Root       --"
-echo "--------------------------------------"
-echo "Enter password for root user: "
-passwd root
+echo "Set password for Root"
+echo "Add User"
+echo "Eddit sudoers with (EDITOR=nano visudo)"
+echo "Add User to groups (wheel,video,audio,optical,storage,tty)
 EOT
