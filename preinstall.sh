@@ -77,7 +77,7 @@ echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
+arch-chroot /mnt <<"EOT"
 
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
@@ -104,3 +104,4 @@ umount -R /mnt
 echo "--------------------------------------"
 echo "--   SYSTEM READY FOR FIRST BOOT    --"
 echo "--------------------------------------"
+EOT
