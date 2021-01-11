@@ -46,8 +46,7 @@ function setup {
     echo "Setting up mirrors for optimal download - US Only"
     echo "-------------------------------------------------"
     pacman -S --noconfirm pacman-contrib curl
-    mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-    curl -s "https://www.archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+    
 
     echo "-------------------------------------------------"
     echo "              makepkg configuration              "
@@ -64,13 +63,14 @@ function setup {
     echo "       Setup Language to US and set locale       "
     echo "-------------------------------------------------"
     sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    sed -i 's/#de_AT.UTF-8/de_AT.UTF-8/g' /etc/locale.gen
     locale-gen
-    timedatectl --no-ask-password set-timezone America/Chicago
+    timedatectl --no-ask-password set-timezone Europe/Vienna
     timedatectl --no-ask-password set-ntp 1
-    localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
+    localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="de_AT.UTF-8"
 
     # Set keymaps
-    localectl --no-ask-password set-keymap us
+    localectl --no-ask-password set-keymap de-latin1-nodeadkeys
 
     # Hostname
     hostnamectl --no-ask-password set-hostname $hostname
@@ -83,7 +83,6 @@ function baseSetup {
     PKGS=(
 
         # --- XORG Display Rendering
-            'xorg'                  # Base Package
             'xorg-drivers'          # Display Drivers 
             'xterm'                 # Terminal for TTY
             'xorg-server'           # XOrg server
@@ -111,7 +110,6 @@ function baseSetup {
             'openvpn'                   # Open VPN support
             'networkmanager-openvpn'    # Open VPN plugin for NM
             'network-manager-applet'    # System tray icon/utility for network connectivity
-            'libsecret'                 # Library for storing passwords
         
         # --- Audio
             'alsa-utils'        # Advanced Linux Sound Architecture (ALSA) Components https://alsa.opensrc.org/
@@ -175,7 +173,6 @@ function softwareSetup {
         'unzip'                 # Zip compression program
         'wget'                  # Remote content retrieval
         'terminator'            # Terminal emulator
-        'vim'                   # Terminal Editor
         'zenity'                # Display graphical dialog boxes via shell scripts
         'zip'                   # Zip compression program
         'zsh'                   # ZSH shell
@@ -187,7 +184,6 @@ function softwareSetup {
         'android-file-transfer' # Android File Transfer
         'autofs'                # Auto-mounter
         'btrfs-progs'           # BTRFS Support
-        'dosfstools'            # DOS Support
         'exfat-utils'           # Mount exFat drives
         'gparted'               # Disk utility
         'gvfs-mtp'              # Read MTP Connected Systems
@@ -230,7 +226,7 @@ function softwareSetup {
 
         'kdenlive'              # Movie Render
         'obs-studio'            # Record your screen
-        'celluloid'             # Video player
+        'vlc'                   # Video player
         
         # GRAPHICS AND DESIGN -------------------------------------------------
 
@@ -252,7 +248,6 @@ function softwareSetup {
 
     'i3lock-fancy'              # Screen locker
     'synology-drive'            # Synology Drive
-    'freeoffice'                # Office Alternative
     
     # MEDIA ---------------------------------------------------------------
 
@@ -261,7 +256,7 @@ function softwareSetup {
 
     # COMMUNICATIONS ------------------------------------------------------
 
-    'brave-nightly-bin'         # Brave
+    'brave-bin'                 # Brave
     
 
     # THEMES --------------------------------------------------------------
@@ -323,7 +318,7 @@ fi' > ${HOME}/.xinitrc
     echo
     echo "Configuring vconsole.conf to set a larger font for login shell"
 
-    printf 'KEYMAP=us
+    printf 'KEYMAP=de-latin1-nodeadkeys
     FONT=ter-v32b' < /etc/vconsole.conf
 
     # ------------------------------------------------------------------------
