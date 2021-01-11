@@ -75,7 +75,7 @@ mount "${DISK}1" /mnt/boot               # Mounts UEFI Partition
 echo "--------------------------------------"
 echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
-pacstrap /mnt base base-devel linux linux-firmware grub nano sudo --noconfirm --needed
+pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 """
