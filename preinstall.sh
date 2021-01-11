@@ -78,6 +78,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 cat << EOT | arch-chroot /mnt
 
+pacman -S neofetch --noconfirm
 echo "--------------------------------------"
 echo "-- Setting up localtime             --"
 echo "--------------------------------------"
