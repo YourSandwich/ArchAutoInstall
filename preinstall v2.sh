@@ -1,3 +1,4 @@
+'''
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
 #      _          _    __  __      _   _
@@ -77,7 +78,7 @@ echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
-
+'''
 cat << EOT | arch-chroot /mnt
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
