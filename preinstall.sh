@@ -73,7 +73,7 @@ mount "${DISK}1" /mnt/boot               # Mounts UEFI Partition
 echo "--------------------------------------"
 echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
-pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano sudo --noconfirm --needed
+pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano git sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat << EOT | arch-chroot /mnt
@@ -85,18 +85,18 @@ echo "--------------------------------------"
 
 ln -sf /usr/share/zoneinfo/Europe/Vienna /etc/localtime
 hwclock --systohc
-sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
-sed -i "s/#de_AT.UTF-8/de_AT.UTF-8/g" /etc/locale.gen
+#sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
+#sed -i "s/#de_AT.UTF-8/de_AT.UTF-8/g" /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
-echo "ReRe" >> /etc/hostname.conf
+#echo "ReRe" >> /etc/hostname
 
 # Setting hosts file
 echo "
-127.0.0.1	localhost
-::1		    localhost
-127.0.1.1	ReRe.localdomain	ReRe" >> /etc/hosts
+127.0.0.1	    localhost
+::1		        localhost
+127.0.1.1	    ReRe.localdomain	ReRe" >> /etc/hosts
 
 
 mkinitcpio -P
