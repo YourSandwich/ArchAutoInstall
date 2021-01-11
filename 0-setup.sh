@@ -48,7 +48,7 @@ sed -i 's/#de_AT.UTF-8/de_AT.UTF-8/g' /etc/locale.gen
 locale-gen
 timedatectl --no-ask-password set-timezone Europe/Vienna
 timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="de_AT.UTF-8"
+localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="de_AT.UTF-8"
 
 # Set keymaps
 localectl --no-ask-password set-keymap de-latin1-nodeadkeys
