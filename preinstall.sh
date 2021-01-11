@@ -8,13 +8,11 @@
 #-------------------------------------------------------------------------
 
 echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download - US Only"
+echo "Setting up mirrors for optimal download - AT Only"
 echo "-------------------------------------------------"
 timedatectl set-ntp true
 pacman -Sy --noconfirm
 pacman -S --noconfirm pacman-contrib
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-curl -s "https://www.archlinux.org/mirrorlist/?country=AT&protocol=http&protocol=https&ip_version=4" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 
 
 
@@ -48,7 +46,7 @@ sgdisk -t 3:8300 ${DISK} #Linux Filesystem
 sgdisk -t 4:8200 ${DISK} #Linux Swap
 
 # label partitions
-sgdisk -c 1:"EFI" ${DISK}
+sgdisk -c 1:"EFI"  ${DISK}
 sgdisk -c 2:"ROOT" ${DISK}
 sgdisk -c 3:"HOME" ${DISK}
 sgdisk -c 4:"SWAP" ${DISK}
@@ -73,8 +71,9 @@ mount -o subvol=@ "${DISK}2" /mnt        # Mount Subolume from root
 mount -o subvol=@home "${DISK}3" /mnt/   # Mount Subolume from home 
 mkdir /mnt/boot
 mount "${DISK}1" /mnt/boot               # Mounts UEFI Partition
+
 echo "--------------------------------------"
-echo "-- Arch Install on Main Drive       --"
+echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware grub nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
