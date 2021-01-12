@@ -74,7 +74,7 @@ mount "${DISK}p1" /mnt/boot               # Mounts UEFI Partition
 echo "--------------------------------------"
 echo "-- Arch Install on selected Drive   --"
 echo "--------------------------------------"
-pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano git sudo --noconfirm --needed
+pacstrap /mnt --overwrite "*" base base-devel linux linux-firmware grub efibootmgr nano git sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat << EOT | arch-chroot /mnt
@@ -92,7 +92,6 @@ locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
 echo "annefrank" >> /etc/hostname
-
 # Setting hosts file
 echo "
 127.0.0.1	    localhost
