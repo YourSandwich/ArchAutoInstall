@@ -52,20 +52,20 @@ sgdisk -c 4:"SWAP" ${DISK}
 # make filesystems
 echo -e "\nCreating Filesystems...\n$HR"
 
-mkfs.vfat -F32 -n "EFI" "${DISK}1"  # Formats EFI Partition
-mkfs.btrfs -L "ROOT" "${DISK}2"     # Formats ROOT Partition
-mkfs.btrfs -L "HOME" "${DISK}3"     # Formats HOME Partition
-mkswap "${DISK}4"                   # Create SWAP
-swapon "${DISK}4"                   #Set SWAP
+mkfs.vfat -F32 -n "EFI" "${DISK}p1"  # Formats EFI Partition
+mkfs.btrfs -L "ROOT" "${DISK}p2"     # Formats ROOT Partition
+mkfs.btrfs -L "HOME" "${DISK}p3"     # Formats HOME Partition
+mkswap "${DISK}p4"                   # Create SWAP
+swapon "${DISK}p4"                   #Set SWAP
 
 # mount target
 mkdir /mnt
-mount "${DISK}2" /mnt
+mount "${DISK}p2" /mnt
 btrfs su cr /mnt/@          # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
-mount "${DISK}3" /mnt       
+mount "${DISK}p3" /mnt       
 btrfs su cr /mnt/@home      # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
-mount -o subvol=@ "${DISK}2" /mnt        # Mount Subolume from root   
+mount -o subvol=@ "${DISK}p2" /mnt        # Mount Subolume from root   
 mkdir /mnt/boot
-mount "${DISK}1" /mnt/boot       
+mount "${DISK}p1" /mnt/boot       
