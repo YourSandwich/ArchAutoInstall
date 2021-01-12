@@ -67,6 +67,7 @@ mount "${DISK}p3" /mnt
 btrfs su cr /mnt/@home      # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
 mount -o subvol=@ "${DISK}p2" /mnt        # Mount Subolume from root   
+mount -o subvol=@home "${DISK}p3" /mnt/home
 mkdir /mnt/boot
 mount "${DISK}p1" /mnt/boot               # Mounts UEFI Partition
 
