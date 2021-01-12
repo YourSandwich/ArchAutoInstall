@@ -49,7 +49,6 @@ sgdisk -c 1:"EFI"  ${DISK}
 sgdisk -c 2:"ROOT" ${DISK}
 sgdisk -c 3:"HOME" ${DISK}
 sgdisk -c 4:"SWAP" ${DISK}
-
 # make filesystems
 echo -e "\nCreating Filesystems...\n$HR"
 
