@@ -107,6 +107,11 @@ echo "--------------------------------------"
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
+git clone https://github.com/YourSandwich/ArchAutoInstall.git
+cd ArchAutoInstall
+cd PackageList
+pacman -S - < ArchKdeBase.txt --noconfirm --needed
+
 echo "--------------------------------------"
 echo "--          Network Setup           --"
 echo "--------------------------------------"
