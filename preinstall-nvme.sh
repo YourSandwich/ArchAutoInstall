@@ -118,6 +118,7 @@ echo "--          Network Setup           --"
 echo "--------------------------------------"
 pacman -S networkmanager dhclient --noconfirm --needed
 systemctl enable --now NetworkManager
+systemctl enable sddm
 
 echo "Default root password is root"
 passwd
