@@ -34,7 +34,7 @@ sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
 # create partitions
 sgdisk -n 1:0:+200M ${DISK} # partition 1 (UEFI SYS), default start block, 512MB
 sgdisk -n 2:0:+100G ${DISK} # partition 2 (Root), default start, remaining
-sgdisk -n 3:0:-8G ${DISK}   # partition 3 (home), default start, remaining (-8G for 8GB Swap)
+sgdisk -n 3:0:-16G ${DISK}   # partition 3 (home), default start, remaining (-8G for 8GB Swap)
 sgdisk -n 4:0:0 ${DISK}     # partition 4 (swap), default start, remaining
 
 # set partition types
@@ -85,18 +85,18 @@ echo "--------------------------------------"
 
 ln -sf /usr/share/zoneinfo/Europe/Vienna /etc/localtime
 hwclock --systohc
-#sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
-#sed -i "s/#de_AT.UTF-8/de_AT.UTF-8/g" /etc/locale.gen
-#locale-gen
+sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
+sed -i "s/#de_AT.UTF-8/de_AT.UTF-8/g" /etc/locale.gen
+locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
-#echo "ReRe" >> /etc/hostname
+echo "annefrank" >> /etc/hostname
 
 # Setting hosts file
 echo "
 127.0.0.1	    localhost
 ::1		        localhost
-127.0.1.1	    ReRe.localdomain	ReRe" >> /etc/hosts
+127.0.1.1	    annefrank.localdomain	annefrank" >> /etc/hosts
 
 
 mkinitcpio -P
